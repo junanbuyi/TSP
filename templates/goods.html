@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>物流管理系统</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script>
+        window.onload = function() {
+            // 获取 cookie 值中的用户名
+            const username = document.cookie.split(';')
+                .map(c => c.trim())
+                .find(c => c.startsWith('username='))
+                .split('=')[1];
+
+            // 在页面左下角显示用户名
+            const userInfoEl = document.getElementById('user-info');
+            userInfoEl.innerText = `Logged in as ${username}`;
+
+            // 将 cookie 值显示在输入框中
+            const cookieInputEl = document.getElementById('cookie-input');
+            cookieInputEl.value = document.cookie;
+        }
+    </script>
+    <style>
+        /* 设置页面背景色和字体 */
+body {
+    background-color: #00ffc4;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* 设置侧边栏的样式 */
+#sidebar {
+    background: linear-gradient(to bottom right, #4e4e4e, #7f7f7f);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* 调整按钮样式 */
+.module-btn {
+    background: linear-gradient(to bottom, #f9f9f9, #e6e6e6);
+    border: none;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    color: #333;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 10px;
+    text-align: left;
+    text-transform: uppercase;
+    transition: all 0.2s ease-in-out;
+    width: 100%;
+}
+.module-btn:hover {
+    background: linear-gradient(to bottom, #e6e6e6, #f9f9f9);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* 调整字体样式 */
+h1, button {
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* 调整图标颜色 */
+i {
+    color: rgba(255, 255, 255, 0.58);
+}
+
+/* 调整头像框样式 */
+#avatar-container {
+    position: relative;
+}
+#avatar-container {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
+
+.circle {
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: 0% 50%; /* 将背景图片位置设置到左偏下 */
+  background-image: url('../static/image/photo_2022-12-23_08-45-28.jpg'); /* 可以在这里设置默认图片 */
+  position: relative; /* 让后代元素可以定位在其上面 */
+}
+
+.input-file {
+  position: absolute;
+  bottom: 0; /* 将input-file元素的位置设置到底部 */
+  left: 0; /* 将input-file元素的位置设置到左侧 */
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+ footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: #f5f5f5;
+        text-align: center;
+        padding: 10px;
+        font-size: 14px;
+        color: #666;
+        }
+    </style>
+</head>
+<body>
+	<div id="sidebar">
+		<button class="module-btn" onclick="location.href='/waybill'">
+			<i class="fas fa-file-alt"></i>运单管理
+		</button>
+        <button class="module-btn" onclick="location.href='/departure'">
+        	<i class="fas fa-truck"></i>发车管理
+        </button>
+        <button class="module-btn" onclick="location.href='/arrival'">
+        	<i class="fas fa-warehouse"></i>到达管理
+        </button>
+        <button class="module-btn" onclick="location.href='/finance'">
+        	<i class="fas fa-money-bill-wave"></i>财务管理
+        </button>
+        <button class="module-btn" onclick="location.href='/report'">
+        	<i class="fas fa-chart-bar"></i>业务报表
+        </button>
+        <button class="module-btn" onclick="location.href='/settings'">
+        	 <i class="fas fa-cogs"></i>系统设置
+        </button>
+	</div>
+
+	    <!-- 头像框按钮 -->
+    <div id="avatar-container">
+        <i class="fas fa-user-circle"></i>
+        <div id="avatar-dropdown">
+            <p>Cookies:</p>
+            <p id="cookie-value"></p>
+        </div>
+    </div>
+
+
+<div id="content">
+   <header>物流运单管理系统</header>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h2>新建运单</h2>
+      <form>
+        <label for="start-location">起始地点：</label>
+        <input type="text" id="start-location" name="start-location" placeholder="请输入起始地点"><br>
+        <label for="end-location">目的地点：</label>
+        <input type="text" id="end-location" name="end-location" placeholder="请输入目的地点"><br>
+        <label for="shipping-date">发货时间：</label>
+        <input type="datetime-local" id="shipping-date" name="shipping-date"><br>
+        <label for="delivery-date">送货时间：</label>
+        <input type="datetime-local" id="delivery-date" name="delivery-date"><br>
+        <label for="cargo-type">货物类型：</label>
+        <input type="text" id="cargo-type" name="cargo-type" placeholder="请输入货物类型"><br>
+        <label for="cargo-weight">货物重量：</label>
+        <input type="text" id="cargo-weight" name="cargo-weight" placeholder="请输入货物重量"><br>
+        <label for="shipping-fee">运费：</label>
+        <input type="text" id="shipping-fee" name="shipping-fee" placeholder="请输入运费"><br>
+        <label for="is-delivered">是否送达：</label>
+        <input type="checkbox" id="is-delivered" name="is-delivered"><br>
+        <input type="submit" value="提交">
+      </form>
+    </div>
+    <div class="col">
+      <h2>运单查询</h2>
+      <form method="POST" action="/administrater_waybill">
+        <label for="waybill-id">运单编号：</label>
+        <input type="text" id="waybill-id" name="waybill-id" placeholder="请输入运单编号" required><br>
+        <input type="submit" value="查询">
+      </form>
+      <div id="waybill-details">
+        <p id="start-location-output"></p>
+        <p id="end-location-output"></p>
+        <p id="shipping-date-output"></p>
+        <p id="delivery-date-output"></p>
+        <p id="cargo-type-output"></p>
+        <p id="cargo-weight-output"></p>
+        <p id="shipping-fee-output"></p>
+        <p id="is-delivered-output"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+     <!-- 页脚 -->
+    <footer>
+        <p>版权信息 © 2023 My tsp_web</p>
+    </footer>
+<script>
+    const waybillForm = document.querySelector('#waybill-form');
+const waybillDetails = document.querySelector('#waybill-details');
+
+waybillForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const formData = new FormData(waybillForm);
+  const waybillId = formData.get('waybill-id');
+
+  fetch('/administrater_waybill', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => {
+    if (response.ok) {
+      window.location.href = '/administrater_waybill';
+    } else {
+      throw new Error('运单查询失败，请检查输入是否正确');
+    }
+  })
+  .catch(error => {
+    console.error(error);
+    waybillDetails.innerHTML = `<p>${error.message}</p>`;
+  });
+});
+
+</script>
+
+<div class="circle">
+		<label for="file-upload"></label>
+		<input id="file-upload" class="input-file" type="file" onchange="updateImage(this)">
+	</div>
+
+	<script>
+		function updateImage(input) {
+			var circle = input.parentNode;
+			var file = input.files[0];
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				circle.style.backgroundImage = "url('" + e.target.result + "')";
+			}
+
+			reader.readAsDataURL(file);
+		}
+	</script>
+
+</body>
+</html>

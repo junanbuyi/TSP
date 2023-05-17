@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>车辆信息</title>
+  <style>
+    /* 设置页面布局 */
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f8f8;
+    }
+
+    /* 设置左侧司机照片的样式 */
+    .driver-photo {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 50px;
+    }
+
+    /* 设置右侧司机个人信息的样式 */
+    .driver-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .driver-info h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      color: #333;
+      text-transform: uppercase;
+    }
+
+    .driver-info p {
+      margin: 0;
+      font-size: 1.5rem;
+      color: #666;
+    }
+
+    /* 设置好评度和好评语句的样式 */
+    .driver-evaluation {
+      margin-top: 40px;
+    }
+
+    .driver-evaluation h2 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+      color: #333;
+      text-transform: uppercase;
+    }
+
+    .driver-evaluation .evaluation-score {
+      font-size: 3rem;
+      color: #f60;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .driver-evaluation .evaluation-comments {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: 1.5rem;
+      color: #333;
+    }
+
+    .driver-evaluation .evaluation-comments li {
+      margin-bottom: 10px;
+      padding-left: 30px;
+      position: relative;
+    }
+
+    .driver-evaluation .evaluation-comments li:before {
+      content: '★';
+      position: absolute;
+      left: 0;
+      color: #f60;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <img class="driver-photo" src="../static/image/1619520737777.jpeg" alt="司机照片">
+  <div class="driver-info">
+    <h1>司机姓名</h1>
+    <p>性别：男</p>
+    <p>年龄：35</p>
+    <p>驾龄：10年</p>
+    <p>电话：13812345678</p>
+    <p>地址：上海市浦东新区XX路XX号</p>
+    <div class="driver-evaluation">
+      <h2>好评度</h2>
+      <div class="evaluation-score">4.8</div>
+      <ul class="evaluation-comments">
+        <li>开车技术一流，非常安全</li>
+        <li>态度非常好，服务周到</li>
+        <li>很准时，从不迟到</li>
+      </ul>
+    </div>
+  </div>
+</body>
+
+</html>

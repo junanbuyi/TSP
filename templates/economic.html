@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>财务管理页面</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-image: url("../static/image/pexels-lukas-590016.jpg");
+        }
+        .navbar {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e5e5e5;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+        }
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #007bff;
+        }
+        .navbar-nav .nav-item .nav-link {
+            color: #6c757d;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+        }
+        .dropdown-item {
+            font-size: 1.1rem;
+            font-weight: normal;
+            color: #6c757d;
+        }
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+            color: #007bff;
+        }
+        .dropdown-menu {
+            border-radius: 0;
+        }
+        .dropdown-menu:before {
+            position: absolute;
+            content: "";
+            border: 8px solid transparent;
+            border-bottom-color: #ffffff;
+            top: -16px;
+            left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">财务管理</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        业务报表
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                        <a class="dropdown-item" href="#">AB测试</a>
+                        <a class="dropdown-item" href="#">环比</a>
+                        <a class="dropdown-item" href="#">箱线图</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        统计模型分析
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                        <a class="dropdown-item" href="#">RFM模型</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        机器学习模型分析
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
+                        <a class="dropdown-item" href="#">贝叶斯模型</a>
+                        <a class="dropdown-item" href="#">支持向量机模型</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <div class="card p-5">
+            <h1 class="text-center">财务管理模块介绍</h1>
+            <p class="text-center text-muted">下面介绍一下各个板块的功能：</p>
+
+            <div class="row mt-5">
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">ab测试</h5>
+                            <p class="card-text">通过测试不同页面视觉效果来评估用户的转换率</p>
+                            <a href="/waybill" class="btn btn-primary">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">环比同比</h5>
+                            <p class="card-text">通过比较不同月份相同种类，同一月份不同种类找出最佳车辆安排</p>
+                            <a href="/departure" class="btn btn-primary">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">箱线图</h5>
+                            <p class="card-text">了解数据的分布情况，判断数据的偏态、异常值和离群值</p>
+                            <a href="/arrival" class="btn btn-primary">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">RFM模型</h5>
+                            <p class="card-text">对客户进行区分</p>
+                            <a href="/rfm" class="btn btn-primary">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">支持向量机模型</h5>
+                            <p class="card-text">将信息进行降维处理，选择出优质客户</p>
+                            <a href="/svm" class="btn btn-primary">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">朴素贝叶斯</h5>
+                            <p class="card-text">将用户收取订单后的信息对司机的评价文章进行分类，有效区分文本</p>
+                            <a href="/arrival" class="btn btn-primary">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

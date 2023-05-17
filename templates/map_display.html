@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>物流路线实时动态展示</title>
+    <style>
+      /* 设置页面背景颜色 */
+      body {
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+      }
+
+      /* 设置顶部导航栏样式 */
+      .topnav {
+        background-color: #34495e;
+        overflow: hidden;
+        height: 60px;
+      }
+
+      .topnav a {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 22px 20px;
+        text-decoration: none;
+        font-size: 20px;
+        transition: background-color 0.2s ease-in-out;
+      }
+
+      .topnav a:hover {
+        background-color: #2c3e50;
+        color: #fff;
+      }
+
+      .topnav .active {
+        background-color: #2c3e50;
+      }
+
+      /* 设置侧边栏样式 */
+      .sidebar {
+        height: 100%;
+        width: 200px;
+        position: fixed;
+        z-index: 1;
+        top: 60px;
+        left: 0;
+        background-color: #2c3e50;
+        overflow-x: hidden;
+        padding-top: 20px;
+      }
+
+      /* 设置标题样式 */
+      h1 {
+        text-align: center;
+        color: #333;
+        margin: 30px 0;
+      }
+
+      /* 设置地图容器样式 */
+      #map {
+        width: 100%;
+        height: 600px;
+        margin-bottom: 30px;
+      }
+
+      /* 设置按钮样式 */
+      button {
+        padding: 12px 20px;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+        font-size: 18px;
+      }
+
+      /* 设置按钮悬停时的样式 */
+      button:hover {
+        background-color: #388e3c;
+      }
+
+      footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: gray;
+        text-align: center;
+        padding: 10px;
+        font-size: 14px;
+        color: #666;
+        opacity: 0.8;
+        }
+
+    </style>
+  </head>
+  <body>
+    <div class="topnav">
+      <a class="active" href="/home">首页</a>
+      <a class="active" href="#home">实时动态</a>
+      <a href="/routes">路线信息</a>
+      <a href="/vehicles">车辆信息</a>
+    </div>
+    <div>
+      <h1>物流路线实时动态展示</h1>
+      <form>
+        <label for="waybill">运单编号</label>
+        <input type="text" id="waybill" name="waybill">
+        <input type="submit" value="查询">
+      </form>
+      <div id="map"></div>
+      <div id="panel"></div>
+      <div>
+        <button id="start">开始</button>
+        <button id="pause">暂停</button>
+        <button id="reset">重置</button>
+      </div>
+    </div>
+   <script type="text/javascript">
+        window._AMapSecurityConfig = {
+            securityJsCode:'0014f983f9e4c42bcd11df425f3f8b12',
+        }
+</script>
+  <script src="https://webapi.amap.com/maps?v=1.4.15&key=dc550297520f1e2a3c4b577a805f7acc"></script>
+  <script src="https://webapi.amap.com/ui/1.0/main.js"></script>
+   <script src="https://webapi.amap.com/maps?v=1.4.15&key=dc550297520f1e2a3c4b577a805f7acc&plugin=AMap.Driving"></script>
+    <script>
+      var map = new AMap.Map("map", {
+        zoom: 14,
+        center: [116.404, 39.915]
+      });
+
+      // 获取表单和按钮元素
+    const form = document.querySelector('form');
+    const submitBtn = document.querySelector('input[type=submit]');
+
+    // 添加表单提交事件监听器
+    form.addEventListener('submit', function(event) {
+      event.preventDefault(); // 防止表单默认提交行为
+
+      // 获取运单编号
+      const waybill = document.getElementById('waybill').value;
+      // 构造请求体参数
+      const formData = new FormData();
+      formData.append('waybill', waybill);
+
+      // 发送 POST 请求获取出发地点和到达地点
+      fetch('/view_waybill', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => {
+          // 根据出发地点和到达地点规划路线
+          const start = data.start;
+          const end = data.end;
+          // 设置地图中心点为出发地点或到达地点
+          map.setCenter(start);
+          const driving = new AMap.Driving({
+              map: map, // 添加这一行
+              panel: "panel"
+                });
+          alert(start);
+          alert(end);
+          console.log(1);
+            driving.search(start, end, function(status, result) {
+              if (status === "complete") {
+                const path = result.routes[0].path;
+                const polyline = new AMap.Polyline({
+                  path: path,
+                  strokeColor: "#3366FF",
+                  strokeWeight: 6,
+                  strokeOpacity: 0.8
+                });
+                polyline.setMap(map);
+              } else {
+                console.error("路线规划失败：" + status);
+              }
+            });
+
+            })
+            .catch(error => console.error(error));
+        });
+
+    </script>
+
+<!-- 页脚 -->
+<footer>
+  <p>版权信息 © 2023 My tsp_web</p>
+  <a href="/about">关于我们</a>
+  <a href="/contact">联系我们</a>
+</footer>
+  </body>
+
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>物流管理系统</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <style>
+    /* 设置页面背景色和字体 */
+    body {
+        background-color: white;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    /* 自定义样式 */
+    .navbar {
+        background-color: #343a40 !important;
+    }
+
+    .navbar-brand {
+        font-weight: bold;
+        font-size: 24px;
+    }
+
+    .nav-link {
+        font-size: 18px;
+        margin-right: 20px;
+    }
+
+    #content {
+        position: relative;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    #video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        min-width: 100%;
+        min-height: 100%;
+        z-index: -1;
+    }
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: gray;
+        text-align: center;
+        padding: 10px;
+        font-size: 14px;
+        color: #666;
+        opacity:1;
+        }
+</style>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">物流管理系统</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/user_home"><i class="fas fa-file-alt"></i> 运单管理</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/map_display"><i class="fas fa-truck"></i> 发车管理</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/pay"><i class="fas fa-truck"></i>支付管理</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div id="content">
+    <video id="video" autoplay loop muted>
+        <source src="{{ url_for('static', filename='image/pexels-ahmet-kurt-16496400-1080x1920-25fps.mp4') }}" type="video/mp4">
+    </video>
+</div>
+    <div class="container mt-5">
+        <div class="card p-5">
+            <h1 class="text-center">欢迎来到用户系统</h1>
+            <p class="text-center text-muted">下面介绍一下各个板块的功能：</p>
+
+            <div class="row mt-5">
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">运单管理</h5>
+                            <p class="card-text">用来管理货物的物流信息，包括起始地点、目的地点、物品数量和类型等。</p>
+                            <a href="/user_home" class="btn btn-primary">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">路线管理</h5>
+                            <p class="card-text">查看物品流动</p>
+                            <a href="/map_display" class="btn btn-primary">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+
+                  <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">支付订单管理</h5>
+                            <p class="card-text">查看支付情况</p>
+                            <a href="/pay" class="btn btn-primary">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<!-- 页脚 -->
+<footer>
+  <p>版权信息 © 2023 My tsp_web</p>
+  <a href="/about">关于我们</a>
+  <a href="/contact">联系我们</a>
+</footer>
+</html>
+

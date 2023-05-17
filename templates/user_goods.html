@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>物流运单管理系统</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<style>
+		/* 布局样式 */
+         body {
+			background-image: url("../static/image/1619507519411.jpeg");
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+		header {
+          background-color: #333;
+          color: #ffffff;
+          padding: 10px;
+          text-align: center;
+          font-size: 24px;
+          font-weight: bold;
+          opacity: 0.8; /* set opacity to 80% */
+        }
+
+		.container {
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px;
+			background-color: #fff;
+			box-shadow: 0 2px 4px rgba(0,0,0,.1);
+		}
+		.row {
+			display: flex;
+			flex-wrap: wrap;
+			margin: 20px 0;
+		}
+		.col {
+			flex: 1;
+			margin: 0 10px;
+		}
+		input[type="text"], select, input[type="checkbox"] {
+			width: 100%;
+			padding: 12px 20px;
+			margin: 8px 0;
+			box-sizing: border-box;
+			border: none;
+			border-bottom: 2px solid #ddd;
+			background-color: #f7f7f7;
+			font-size: 16px;
+			color: #333;
+			transition: border-bottom .3s;
+		}
+		input[type="text"]:focus, select:focus {
+			outline: none;
+			border-bottom: 2px solid #333;
+		}
+		label {
+			font-size: 16px;
+			font-weight: bold;
+			display: block;
+			margin-bottom: 10px;
+		}
+		button {
+			background-color: #333;
+			color: #fff;
+			border: none;
+			padding: 10px 20px;
+			font-size: 16px;
+			cursor: pointer;
+			transition: background-color .3s;
+		}
+		button:hover {
+			background-color: #444;
+		}
+		table {
+			border-collapse: collapse;
+			width: 100%;
+			margin-top: 20px;
+		}
+		table th, table td {
+			padding: 10px;
+			text-align: left;
+			border: 1px solid #ddd;
+		}
+		table th {
+			background-color: #333;
+			color: #fff;
+			font-weight: bold;
+		}
+		/* 响应式样式 */
+		@media screen and (max-width: 600px) {
+			.row {
+				flex-direction: column;
+			}
+			.col {
+				margin: 10px 0;
+			}
+		}
+	</style>
+</head>
+<body>
+	<header>物流运单管理系统</header>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h2>新建运单</h2>
+				<form>
+                    <label for="user-name">姓名：</label>
+					<input type="text" id="user-name" name="user-name" placeholder="请输入姓名"><br>
+					<label for="start-location">起始地点：</label>
+					<input type="text" id="start-location" name="start-location" placeholder="请输入起始地点"><br>
+					<label for="end-location">目的地点：</label>
+                    <input type="text" id="end-location" name="end-location" placeholder="请输入目的地点"><br>
+                    <label for="shipping-date">发货时间：</label>
+                    <input type="datetime-local" id="shipping-date" name="shipping-date"><br>
+                    <label for="delivery-date">送货时间：</label>
+                    <input type="datetime-local" id="delivery-date" name="delivery-date"><br>
+                    <label for="cargo-type">货物类型：</label>
+                    <input type="text" id="cargo-type" name="cargo-type" placeholder="请输入货物类型"><br>
+                    <label for="cargo-weight">货物重量：</label>
+                    <input type="text" id="cargo-weight" name="cargo-weight" placeholder="请输入货物重量"><br>
+                    <label for="shipping-fee">运费：</label>
+                    <input type="text" id="shipping-fee" name="shipping-fee" placeholder="请输入运费"><br>
+                    <label for="is-delivered">是否送达：</label>
+                    <input type="checkbox" id="is-delivered" name="is-delivered"><br>
+                    <input type="submit" value="提交">
+                    </form>
+                    </div>
+                    <div class="col">
+                    <h2>运单查询</h2>
+                    <form>
+                    <label for="waybill-id">运单编号：</label>
+                    <input type="text" id="waybill-id" name="waybill-id" placeholder="请输入运单编号"><br>
+                    <input type="submit" value="查询">
+                    </form>
+                    <div id="waybill-details">
+                    <p id="start-location-output"></p>
+                    <p id="end-location-output"></p>
+                    <p id="shipping-date-output"></p>
+                    <p id="delivery-date-output"></p>
+                    <p id="cargo-type-output"></p>
+                    <p id="cargo-weight-output"></p>
+                    <p id="shipping-fee-output"></p>
+                    <p id="is-delivered-output"></p>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+    <script>
+     // 获取表单元素
+        const form = document.querySelector('form');
+        const submitBtn = document.querySelector('input[type="submit"]');
+
+        // 监听表单提交事件
+             form.addEventListener('submit', async (event) => {
+                   event.preventDefault(); // 阻止表单默认提交事件
+
+
+          // 获取表单数据
+          const username = document.querySelector('#user-name').value;
+          const startLocation = document.querySelector('#start-location').value;
+          const endLocation = document.querySelector('#end-location').value;
+          const shippingDate = document.querySelector('#shipping-date').value;
+          const deliveryDate = document.querySelector('#delivery-date').value;
+          const cargoType = document.querySelector('#cargo-type').value;
+          const cargoWeight = document.querySelector('#cargo-weight').value;
+          const shippingFee = document.querySelector('#shipping-fee').value;
+          const isDelivered = document.querySelector('#is-delivered').checked;
+
+          // 将数据封装成FormData对象
+          const formData = new FormData();
+          formData.append('username', username);
+          formData.append('sender', startLocation);
+          formData.append('receiver', endLocation);
+          formData.append('shippingDate', shippingDate);
+          formData.append('deliveryDate', deliveryDate);
+          formData.append('cargoType', cargoType);
+          formData.append('cargoWeight', cargoWeight);
+          formData.append('shippingFee', shippingFee);
+          formData.append('isDelivered', isDelivered);
+
+          // 发送POST请求
+         const response = await fetch('/api/waybill', {
+                method: 'POST',
+                body: formData
+        });
+            if (response.ok) {
+            const result = await response.json(); // 处理服务器返回的结果
+            console.log(result);
+            alert("运单信息发送成功");
+            alert("您的运单编号为"+ result.waybill_id + "请妥善保存")
+            window.location.href = '/pay';
+            // 可以在此处添加其他操作，例如清空表单数据等
+          } else {
+            alert("运单信息发送失败，请检查输入是否正确");
+            console.error('运单信息发送失败');
+          }
+});
+</script>
+</body>
+</html>

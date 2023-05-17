@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>支付页面</title>
+    <!-- 引入 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <!-- 引入自定义样式文件 -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        /* 设置背景为视频 */
+        body {
+            background: #000;
+        }
+        video {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            transform: translateX(-50%) translateY(-50%);
+            opacity: 0.7;
+        }
+		.container {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			grid-template-rows: auto;
+			grid-gap: 1rem;
+			padding: 1rem;
+		}
+		.col-md-6 {
+			grid-column: 1 / 2;
+			grid-row: 1 / 2;
+		}
+		.card {
+			margin-bottom: 1rem;
+		}
+		.card-header {
+			background-color: #007bff;
+			color: white;
+			padding: 1rem;
+            width: 335px;
+		}
+		.card-body {
+			padding: 1rem;
+            width: 700px;
+		}
+		form {
+			max-width: 400px;
+			margin: auto;
+		}
+		input[type="text"],
+		select {
+			width: 100%;
+			margin-bottom: 0.5rem;
+			padding: 0.5rem;
+			border: 1px solid #ccc;
+			border-radius: 0.25rem;
+			box-sizing: border-box;
+		}
+		input[type="button"] {
+			background-color:
+			border: none;#007bff;
+			color: white;
+			padding: 0.5rem;
+			border-radius: 0.25rem;
+			cursor: pointer;
+		}
+    </style>
+</head>
+<body>
+    <video autoplay muted loop>
+        <source src="../static/image/gpt-4-92586ac_1080p60.mp4" type="video/mp4">
+    </video>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-13">
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header">药品收费标准</div>
+                    <div class="card-body">
+                        <p>药品收费标准内容5元/kg，超过5kg,8元/kg</p>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header">百货收费标准</div>
+                    <div class="card-body">
+                        <p>百货收费标准内容4元/kg，超过5kg,7元/kg</p>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header">家具收费标准</div>
+                    <div class="card-body">
+                        <p>家具收费标准内容3.8元/kg，超过5kg,6.7元/kg</p>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header">果蔬收费标准</div>
+                    <div class="card-body">
+                        <p>家具收费标准内容7元/kg，超过5kg,10元/kg</p>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header">其他收费标准</div>
+                    <div class="card-body">
+                        <p>家具收费标准内容3元/kg，超过5kg,6元/kg</p>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mx-auto mt-5">
+                    <div class="card-body">
+                        <h2 class="card-title text-center mb-4">用户信息和支付信息</h2>
+                        <form>
+                            <div class="form-group">
+                                <label for="name">姓名：</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="请输入姓名">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">手机号码：</label>
+                                <input type="text" class="form-control" id="phone" name="phone" placeholder="请输入手机号码">
+                            </div>
+                            <div class="form-group">
+                                <label for="address">地址：</label>
+                                <input type="text" class="form-control" id="address" name="address" placeholder="请输入地址">
+                            </div>
+                            <div class="form-group">
+                                <label for="waybill-id">运单编号：</label>
+                                <input type="text" class="form-control" id="waybill-id" name="waybill-id" placeholder="请输入运单编号">
+                            </div>
+                            <div class="form-group">
+                                <label for="shipping-fee">运费：</label>
+                                <input type="text" class="form-control" id="shipping-fee" name="shipping-fee" placeholder="请输入运费">
+                            </div>
+                            <div class="form-group">
+                                <label for="card-number">银行卡号：</label>
+                                <input type="text" class="form-control" id="card-number" name="card-number" placeholder="请输入银行卡号">
+                            </div>
+                            <div class="form-group">
+                                <label for="region">地区：</label>
+                                <select class="form-control" id="region" name="region">
+                                    <option value="华北">华北</option>
+                                    <option value="东北">东北</option>
+                                    <option value="华南">华南</option>
+                                    <option value="华中">华中</option>
+                                    <option value="西南">西南</option>
+                                    <option value="西北">西北</option>
+                                </select>
+                            </div>
+                            <input type="button" class="btn btn-primary btn-block" value="支付" onclick="showPaymentOptions()">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- 引入 jQuery 文件 -->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<!-- 引入 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.bootcss.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script>
+	function showPaymentOptions() {
+		var region = document.getElementById("region").value;
+		if (region == "华北") {
+			window.location.href = "https://wx.qq.com/";
+		} else if (region == "华南") {
+			window.location.href = "https://qr.alipay.com/";
+		}else if (region == "西南") {
+			window.location.href = "https://wx.qq.com/";
+        }else if (region == "西北") {
+            window.location.href = "https://qr.alipay.com/";
+        }
+        else if (region == "华中") {
+            window.location.href = "https://wx.qq.com/";
+        }
+        else {
+			alert("对不起，该地区暂不支持此支付方式！");
+		}
+	}
+</script>
+</body>
+</html>

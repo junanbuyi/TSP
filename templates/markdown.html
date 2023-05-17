@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Markdown Editor</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* 设置页面样式 */
+        body {
+            background-image: url("../static/image/1619507519411.jpeg");
+            background-color: #f8f9fa;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            color: #444;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 设置编辑器和预览区域布局 */
+        .editor-container {
+            display: flex;
+            flex-direction: row;
+            height: 100vh;
+            overflow: hidden;
+            opacity: 0.7;
+        }
+
+        .editor-column {
+            flex: 1;
+            padding: 2rem;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .preview-column {
+            flex: 1;
+            padding: 2rem;
+            box-sizing: border-box;
+            background-image: url("../static/image/1619507519411.jpeg");
+            height: 100vh;
+            width: 50%;
+            position: fixed;
+            top: 0;
+            right: 0;
+            overflow-y: auto; /* 添加这一行样式以实现滚动条 */
+        }
+
+        /* 设置编辑器和预览区域样式 */
+        .editor,
+        .preview {
+            width: 100%;
+            height: 100%;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            line-height: 1.5;
+            padding: 1rem;
+            box-sizing: border-box;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 设置提交按钮样式 */
+        #submit-btn {
+            display: block;
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background-color: #008080;
+            color: #fff;
+            font-size: 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.2s ease-in-out;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        #submit-btn:hover {
+            background-color: #006666;
+        }
+    </style>
+</head>
+<body>
+<div class="editor-container">
+    <div class="editor-column">
+        <textarea id="markdown" class="editor"></textarea>
+    </div>
+    <form id="markdown-form">
+        <div class="preview-column">
+            <div id="preview" class="preview"></div>
+            <button id="submit-btn" type="submit" class="btn btn-primary">提交</button>
+        </div>
+    </form>
+</div>
+<!-- 引入marked.js库实现Markdown解析 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/2.0.0/marked.min.js"></script>
+    <script>
+      // 获取编辑器和预览区域元素
+      const markdownEl = document.querySelector('#markdown');
+      const previewEl = document.querySelector('#preview');
+
+      // 监听编辑器输入事件，实时更新预览区域
+      markdownEl.addEventListener('input', () => {
+        const markdown = markdownEl.value;
+        const html = marked(markdown);
+        previewEl.innerHTML = html;
+      });
+
+      // 获取表单元素并添加事件监听器
+      const formEl = document.querySelector('#markdown-form');
+      formEl.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData();
+        formData.append('markdown', previewEl.innerHTML);
+        fetch('/api/markdown', {
+          method: 'POST',
+          body: formData,
+        })
+          .then(response => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error('上传失败');
+            }
+          })
+          .then(data => {
+            console.log(data);
+            alert('上传成功');
+          })
+          .catch(error => {
+            console.error(error);
+            alert('上传失败');
+          });
+      });
+    </script>
+
+</body>
+</html>
